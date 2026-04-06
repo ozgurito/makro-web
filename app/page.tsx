@@ -72,19 +72,38 @@ export default async function HomePage() {
       <HeroSlider />
 
       {/* ═══════════════════════════════════════════
-          TRUST BAR — White, ince, 4 özellik
+          TRUST BAR — White, SVG ikonlar, tek satır
       ════════════════════════════════════════════ */}
-      <section style={{ background: '#FFFFFF', borderBottom: '1px solid #E8ECF0', padding: '16px 24px' }}>
+      <section style={{ background: '#FFFFFF', borderBottom: '1px solid #E8ECF0', padding: '18px 24px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px 40px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px 48px' }}>
             {[
-              { icon: '🏭', label: 'Toptan Satış', desc: 'Kurumsal anlaşma ile uygun fiyat' },
-              { icon: '🎨', label: 'Logo Baskı & Nakış', desc: 'DTF ve nakış teknolojisi' },
-              { icon: '🚚', label: 'Hızlı Teslimat', desc: 'Türkiye geneline güvenli kargo' },
-              { icon: '✏️', label: 'Özel Tasarım', desc: 'Renk, kumaş, beden özelleştirme' },
+              {
+                svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F57C28" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>,
+                label: 'Toptan Satış', desc: 'Kurumsal anlaşma ile uygun fiyat'
+              },
+              {
+                svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F57C28" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>,
+                label: 'Logo Baskı & Nakış', desc: 'DTF ve nakış teknolojisi'
+              },
+              {
+                svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F57C28" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
+                label: 'Hızlı Teslimat', desc: 'Türkiye geneline güvenli kargo'
+              },
+              {
+                svg: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F57C28" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>,
+                label: 'Özel Tasarım', desc: 'Renk, kumaş, beden özelleştirme'
+              },
             ].map((item, idx) => (
-              <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0' }}>
-                <span style={{ fontSize: 22 }}>{item.icon}</span>
+              <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '4px 0' }}>
+                <div style={{
+                  width: 42, height: 42, borderRadius: 10,
+                  background: 'rgba(245,124,40,0.08)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  {item.svg}
+                </div>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 13, color: '#0F2240' }}>{item.label}</div>
                   <div style={{ fontSize: 11, color: '#8896A4' }}>{item.desc}</div>
@@ -92,6 +111,43 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          STATS BAND — Sosyal kanıt rakamları
+      ════════════════════════════════════════════ */}
+      <section style={{ background: '#0F2240', padding: '36px 24px 72px', position: 'relative' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px 64px' }}>
+            {[
+              { number: '500+', label: 'Kurumsal Müşteri' },
+              { number: '10.000+', label: 'Ürün Teslimi' },
+              { number: '8 Yıl', label: 'Sektör Deneyimi' },
+              { number: '81 İl', label: 'Türkiye Geneli Teslimat' },
+            ].map((stat, idx) => (
+              <div key={idx} style={{ textAlign: 'center', padding: '4px 0' }}>
+                <div style={{
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: 'clamp(28px, 4vw, 40px)',
+                  fontWeight: 900,
+                  color: '#F57C28',
+                  lineHeight: 1,
+                  marginBottom: 6
+                }}>{stat.number}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', fontWeight: 600, letterSpacing: '.04em', textTransform: 'uppercase' }}>
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Wave divider → beyaz kategoriler */}
+        <div style={{ position: 'absolute', bottom: -1, left: 0, right: 0, lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 52" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 52 }}>
+            <path d="M0,52 C360,8 720,52 1080,20 C1260,4 1380,36 1440,52 L1440,52 L0,52 Z" fill="#FFFFFF"/>
+          </svg>
         </div>
       </section>
 
@@ -111,14 +167,14 @@ export default async function HomePage() {
               'is-pantolonu':  { img: '/products/reflektorlu-is-pantolonu-lacivert.png',  sub: 'Kargo, reflektörlü & dayanıklı'   },
             }
             return (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20 }}>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
                 {categories.map((cat) => {
                   const meta = catMeta[cat.slug] ?? { img: cat.imageUrl || `/kategoriler/${cat.slug}.jpg`, sub: 'Kurumsal koleksiyon' }
                   return (
                     <Link
                       key={cat.id}
                       href={`/kategoriler/${cat.slug}`}
-                      className="group"
+                      className="group hover:-translate-y-2 transition-transform duration-300"
                       style={{
                         display: 'block', position: 'relative',
                         borderRadius: 16, overflow: 'hidden',
@@ -213,9 +269,10 @@ export default async function HomePage() {
           <div style={{ textAlign: 'center', marginTop: 40 }}>
             <Link href="/urunler" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
-              padding: '12px 32px', borderRadius: 8,
-              border: '2px solid #0F2240', color: '#0F2240',
+              padding: '13px 36px', borderRadius: 8,
+              background: '#F57C28', color: 'white',
               fontWeight: 700, fontSize: 14, textDecoration: 'none',
+              boxShadow: '0 4px 16px rgba(245,124,40,0.35)',
               transition: 'all .2s'
             }}>
               Tüm Ürünleri Gör →
@@ -273,8 +330,14 @@ export default async function HomePage() {
       {/* ═══════════════════════════════════════════
           CTA BAND — Navy, güçlü kapanış
       ════════════════════════════════════════════ */}
-      <section style={{ background: '#0F2240', padding: '72px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
+      <section style={{ background: '#0F2240', padding: '72px 24px', position: 'relative', overflow: 'hidden' }}>
+        {/* Dot grid pattern */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)',
+          backgroundSize: '28px 28px'
+        }} />
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 32, position: 'relative' }}>
           <div style={{ flex: 1, minWidth: 280 }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: '#F57C28', letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 12 }}>
               Kurumsal Çözümler

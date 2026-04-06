@@ -89,19 +89,23 @@ export default async function ProductDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+      {/* Product hero band */}
+      <div style={{ background: '#0F2240', padding: '20px 24px 28px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+        <div className="max-w-7xl mx-auto" style={{ position: 'relative' }}>
+          <nav style={{ fontSize: 13, color: 'rgba(255,255,255,.4)', display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+            <Link href="/" style={{ color: 'rgba(255,255,255,.4)', textDecoration: 'none' }}>Anasayfa</Link>
+            <span>›</span>
+            <Link href="/urunler" style={{ color: 'rgba(255,255,255,.4)', textDecoration: 'none' }}>Ürünler</Link>
+            <span>›</span>
+            <Link href={`/kategoriler/${product.category.slug}`} style={{ color: 'rgba(255,255,255,.4)', textDecoration: 'none' }}>{product.category.name}</Link>
+            <span>›</span>
+            <span style={{ color: '#FFA05A' }}>{product.name}</span>
+          </nav>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* Breadcrumb */}
-        <nav className="text-sm text-gray-400 mb-8 flex flex-wrap gap-1">
-          <Link href="/" className="hover:text-gray-600">Anasayfa</Link>
-          {' › '}
-          <Link href="/urunler" className="hover:text-gray-600">Ürünler</Link>
-          {' › '}
-          <Link href={`/kategoriler/${product.category.slug}`} className="hover:text-gray-600">
-            {product.category.name}
-          </Link>
-          {' › '}
-          <span className="text-gray-700">{product.name}</span>
-        </nav>
 
         {/* Main block */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">

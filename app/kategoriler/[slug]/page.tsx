@@ -43,51 +43,46 @@ export default async function KategoriPage({ params }: Props) {
 
   return (
     <>
-      <div className="relative overflow-hidden" style={{ backgroundColor: '#0F2240', minHeight: '220px' }}>
-        {/* Category image as blurred background */}
-        <div className="absolute inset-0 opacity-20">
-          <Image
-            src={`/kategoriler/${slug}.jpg`}
-            alt={category.name}
-            fill
-            className="object-cover"
-            priority
-          />
+      <div className="relative overflow-hidden" style={{ backgroundColor: '#0F2240', paddingBottom: 52 }}>
+        {/* Blurred bg image */}
+        <div className="absolute inset-0 opacity-15">
+          <Image src={`/kategoriler/${slug}.jpg`} alt={category.name} fill className="object-cover" priority />
         </div>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #0F2240 40%, transparent 100%)' }} />
+        {/* Dot pattern */}
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,34,64,0.95) 40%, rgba(15,34,64,0.6) 100%)' }} />
 
         <div className="relative max-w-7xl mx-auto px-6 py-14 flex flex-col md:flex-row items-start md:items-center gap-8">
           <div className="flex-1">
-            <nav className="text-white/50 text-sm mb-3">
-              <Link href="/" className="hover:text-white">Anasayfa</Link>
-              {' › '}
-              <Link href="/kategoriler" className="hover:text-white">Kategoriler</Link>
-              {' › '}
-              <span className="text-white">{category.name}</span>
+            <nav style={{ fontSize: 13, color: 'rgba(255,255,255,.45)', marginBottom: 12, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+              <Link href="/" style={{ color: 'rgba(255,255,255,.45)', textDecoration: 'none' }}>Anasayfa</Link>
+              <span>›</span>
+              <Link href="/kategoriler" style={{ color: 'rgba(255,255,255,.45)', textDecoration: 'none' }}>Kategoriler</Link>
+              <span>›</span>
+              <span style={{ color: '#FFA05A' }}>{category.name}</span>
             </nav>
-            <h1
-              className="text-white"
-              style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 800 }}
-            >
+            <h1 className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(36px,5vw,52px)', fontWeight: 800, margin: '0 0 10px 0' }}>
               {category.name}
             </h1>
             {category.description && (
-              <p className="text-white/60 mt-2 max-w-lg">{category.description}</p>
+              <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: 8, maxWidth: 480 }}>{category.description}</p>
             )}
-            <p className="text-white/40 text-sm mt-2">{category.products.length} ürün</p>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(245,124,40,0.2)', border: '1px solid rgba(245,124,40,0.4)', color: '#FFA05A', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>
+              {category.products.length} ürün
+            </div>
           </div>
 
-          {/* Category image — right side */}
-          <div className="hidden md:block flex-shrink-0 rounded-2xl overflow-hidden" style={{ width: '320px', height: '180px' }}>
-            <Image
-              src={`/kategoriler/${slug}.jpg`}
-              alt={category.name}
-              width={320}
-              height={180}
-              className="w-full h-full object-cover"
-              priority
-            />
+          {/* Category image — right */}
+          <div className="hidden md:block flex-shrink-0 rounded-2xl overflow-hidden" style={{ width: '300px', height: '170px', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}>
+            <Image src={`/kategoriler/${slug}.jpg`} alt={category.name} width={300} height={170} className="w-full h-full object-cover" priority />
           </div>
+        </div>
+
+        {/* Wave divider */}
+        <div style={{ position: 'absolute', bottom: -1, left: 0, right: 0, lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 44" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 44 }}>
+            <path d="M0,44 C360,8 1080,44 1440,18 L1440,44 L0,44 Z" fill="#F9FAFB"/>
+          </svg>
         </div>
       </div>
 

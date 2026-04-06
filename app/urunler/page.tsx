@@ -203,21 +203,25 @@ export default async function UrunlerPage({
   return (
     <>
       {/* Page header */}
-      <div style={{ background: '#0F2240', padding: '32px 0 28px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
-          {/* Breadcrumb */}
+      <div style={{ background: '#0F2240', padding: '36px 24px 68px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+        <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative' }}>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,.45)', marginBottom: 10, display: 'flex', gap: 8 }}>
             <Link href="/" style={{ color: 'rgba(255,255,255,.45)', textDecoration: 'none' }}>Anasayfa</Link>
             <span>›</span>
             <span style={{ color: '#FFA05A' }}>Ürünler</span>
           </div>
-          <h1 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 42, fontWeight: 800, color: 'white', margin: 0
-          }}>Ürün Koleksiyonu 2026</h1>
-          <p style={{ fontSize: 15, color: 'rgba(255,255,255,.55)', marginTop: 8 }}>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px,5vw,48px)', fontWeight: 800, color: 'white', margin: '0 0 8px 0' }}>
+            Ürün Koleksiyonu 2026
+          </h1>
+          <p style={{ fontSize: 15, color: 'rgba(255,255,255,.55)', margin: 0 }}>
             DTF baskı ve nakış seçeneğiyle kurumsal kıyafet koleksiyonumuz
           </p>
+        </div>
+        <div style={{ position: 'absolute', bottom: -1, left: 0, right: 0, lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 44" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 44 }}>
+            <path d="M0,44 C480,4 960,44 1440,22 L1440,44 L0,44 Z" fill="#F9FAFB"/>
+          </svg>
         </div>
       </div>
 

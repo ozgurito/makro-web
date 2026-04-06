@@ -11,7 +11,6 @@ import 'swiper/css/effect-fade'
 
 const slides = [
   {
-    // Sol: lacivert koyu → sağ: şeffaf (fotoğraf görünsün)
     overlay: 'linear-gradient(to right, rgba(15,34,64,0.82) 35%, rgba(15,34,64,0.45) 65%, rgba(15,34,64,0.1) 100%)',
     image: '/slides/slide1.png',
     tag: '2026 Koleksiyonu',
@@ -19,7 +18,9 @@ const slides = [
     titleOrange: 'Üniiforması',
     subtitle: 'Compak penye, pike ve polar kumaştan kurumsal iş kıyafetleri',
     cta: 'Koleksiyonu Keşfet →',
-    href: '/urunler'
+    href: '/urunler',
+    cta2: 'Teklif İste',
+    href2: '/teklif-iste'
   },
   {
     overlay: 'linear-gradient(to right, rgba(15,34,64,0.82) 35%, rgba(15,34,64,0.45) 65%, rgba(15,34,64,0.1) 100%)',
@@ -29,7 +30,9 @@ const slides = [
     titleOrange: 'Her Üründe',
     subtitle: 'DTF baskı ve nakış teknolojisiyle kurumsal kimliğinizi yansıtın',
     cta: 'Teklif İste →',
-    href: '/teklif-iste'
+    href: '/teklif-iste',
+    cta2: 'WhatsApp ile Yaz',
+    href2: 'https://wa.me/905418771635'
   },
   {
     overlay: 'linear-gradient(to right, rgba(15,34,64,0.82) 35%, rgba(15,34,64,0.45) 65%, rgba(15,34,64,0.1) 100%)',
@@ -39,7 +42,9 @@ const slides = [
     titleOrange: 'Hızlı Teslimat',
     subtitle: 'Minimum sipariş bilgisi ve özel fiyat için hemen iletişime geçin',
     cta: 'WhatsApp ile Yaz →',
-    href: 'https://wa.me/905418771635'
+    href: 'https://wa.me/905418771635',
+    cta2: 'Ürünleri Gör',
+    href2: '/urunler'
   },
   {
     overlay: 'linear-gradient(to right, rgba(15,34,64,0.82) 35%, rgba(15,34,64,0.45) 65%, rgba(15,34,64,0.1) 100%)',
@@ -49,7 +54,9 @@ const slides = [
     titleOrange: 'Kurumsal Çözüm',
     subtitle: 'Tişörtten polar cekete, her mevsim için iş kıyafeti çözümleri',
     cta: 'Kategorileri Gör →',
-    href: '/kategoriler'
+    href: '/kategoriler',
+    cta2: 'Teklif İste',
+    href2: '/teklif-iste'
   }
 ]
 
@@ -135,18 +142,32 @@ export default function HeroSlider() {
                     {slide.subtitle}
                   </p>
 
-                  {/* CTA */}
-                  <a href={slide.href} style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 8,
-                    background: '#F57C28', color: 'white',
-                    padding: '13px 26px', borderRadius: 8,
-                    fontSize: 15, fontWeight: 700,
-                    textDecoration: 'none',
-                    boxShadow: '0 4px 16px rgba(245,124,40,0.4)',
-                    transition: 'all .2s'
-                  }}>
-                    {slide.cta}
-                  </a>
+                  {/* CTA grubu */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+                    <a href={slide.href} style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 8,
+                      background: '#F57C28', color: 'white',
+                      padding: '13px 26px', borderRadius: 8,
+                      fontSize: 15, fontWeight: 700,
+                      textDecoration: 'none',
+                      boxShadow: '0 4px 16px rgba(245,124,40,0.4)',
+                      transition: 'all .2s'
+                    }}>
+                      {slide.cta}
+                    </a>
+                    <a href={slide.href2} style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 8,
+                      background: 'transparent', color: 'white',
+                      padding: '12px 24px', borderRadius: 8,
+                      fontSize: 15, fontWeight: 600,
+                      textDecoration: 'none',
+                      border: '1.5px solid rgba(255,255,255,0.4)',
+                      transition: 'all .2s',
+                      backdropFilter: 'blur(4px)'
+                    }}>
+                      {slide.cta2}
+                    </a>
+                  </div>
                 </div>
               </div>
 

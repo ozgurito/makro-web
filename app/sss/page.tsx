@@ -60,17 +60,21 @@ export default function SSSPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div style={{ backgroundColor: '#0F2240' }} className="py-12">
-        <div className="max-w-3xl mx-auto px-6">
-          <h1
-            className="text-white"
-            style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 800 }}
-          >
+      <div style={{ background: '#0F2240', padding: '40px 24px 68px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+        <div className="max-w-3xl mx-auto" style={{ position: 'relative' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#FFA05A', letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 12 }}>Yardım Merkezi</div>
+          <h1 className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(36px,5vw,52px)', fontWeight: 800, margin: '0 0 10px 0' }}>
             Sıkça Sorulan Sorular
           </h1>
-          <p className="text-white/60 mt-2">
+          <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, margin: 0 }}>
             Merak ettiğiniz soruların cevaplarını burada bulabilirsiniz.
           </p>
+        </div>
+        <div style={{ position: 'absolute', bottom: -1, left: 0, right: 0, lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 44" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 44 }}>
+            <path d="M0,44 C480,4 960,44 1440,22 L1440,44 L0,44 Z" fill="#FFFFFF"/>
+          </svg>
         </div>
       </div>
 
