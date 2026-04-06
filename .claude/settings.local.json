@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --import-alias=\"@/*\" --no-git --yes)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma:*)",
+      "Bash(E:/workspace/makro-web/.env:*)",
+      "Bash(npm list:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node -e \"const {PrismaClient} = require\\(''''@prisma/client''''\\); const c = new PrismaClient\\(\\); console.log\\(Object.keys\\(c\\)\\)\")",
+      "Bash(npm run:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(find E:/workspace/makro-web -path */Kıyafet/* -type f)",
+      "Bash(python3 -c \":*)",
+      "Bash(pip install:*)",
+      "Bash(python -c \":*)",
+      "Bash(find E:/workspace/makro-web -maxdepth 3 -type f \\\\\\(-iname *.png -o -iname *.jpg -o -iname *.svg -o -iname *.webp \\\\\\))",
+      "Bash(find E:/workspace/makro-web -maxdepth 2 -type f \\\\\\(-iname *.png -o -iname *.jpg -o -iname *.webp -o -iname *.svg \\\\\\))",
+      "Bash(powershell.exe -Command \"Get-Content ''E:\\\\workspace\\\\makro-web\\\\.env.local'' | Select-String -Pattern ''SUPABASE|ADMIN|DATABASE'' | ForEach-Object { $_Line -replace ''=.*'', ''=***'' }\")",
+      "Bash(\"E:/workspace/makro-web/.env.local\":*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/admin/urunler/yeni)",
+      "Bash(curl -s -X POST http://localhost:3000/api/admin/auth -H \"Content-Type: application/json\" -d '{\"\"password\"\":\"\"makro2026admin\"\"}' -c /tmp/admin-cookies.txt -w \"\\\\nSTATUS:%{http_code}\")",
+      "Bash(curl -v -X POST http://localhost:3000/api/admin/upload -b \"admin-auth=makro2026admin\" -F \"file=@/tmp/test.png;type=image/png\")",
+      "Bash(node -e \":*)",
+      "Bash(curl -s -X POST http://localhost:3000/api/admin/upload -b \"admin-auth=makro2026admin\" -F \"file=@C:/Windows/Temp/test.png;type=image/png\" -w \"\\\\nSTATUS:%{http_code}\")",
+      "Bash(npx dotenv -e .env.local -- node -e \":*)",
+      "Bash(set -a)",
+      "Bash(source .env.local)",
+      "Bash(curl -s \"http://localhost:3000/api/search?q=t&limit=5\")"
+    ]
+  }
+}

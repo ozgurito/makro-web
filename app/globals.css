@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-navy: #0F2240;
+  --color-navy-mid: #1A3358;
+  --color-navy-light: #243F6A;
+  --color-orange: #F57C28;
+  --color-orange-dark: #D96718;
+  --color-orange-light: #FFA05A;
+
+  /* Fonts */
+  --font-heading: 'Barlow Condensed', sans-serif;
+  --font-body: 'Nunito Sans', sans-serif;
+
+  /* Border radius */
+  --radius-card: 16px;
+  --radius-btn: 8px;
+
+  /* Box shadows */
+  --shadow-card: 0 2px 12px rgba(15, 34, 64, 0.08);
+  --shadow-elevated: 0 8px 32px rgba(15, 34, 64, 0.14);
+  --shadow-cta: 0 6px 20px rgba(245, 124, 40, 0.35);
+}
+
+:root {
+  --page-bg: #F7F8FA;       /* Serin, nötr açık gri */
+  --card-bg: #FFFFFF;
+  --border: #E8ECF0;         /* Yumuşak mavi-gri border */
+  --orange: #F57C28;
+  --navy: #0F2240;
+
+  --background: var(--page-bg);
+  --foreground: #0F2240;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--page-bg);
+  color: var(--foreground);
+  font-family: var(--font-body, 'Nunito Sans', sans-serif);
+}
+
+.bg-page { background-color: var(--page-bg); }
+.bg-card { background-color: var(--card-bg); }
+.border-soft { border-color: var(--border); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading, 'Barlow Condensed', sans-serif);
+}
+
+/* Utility classes */
+.btn-primary {
+  background-color: #F57C28;
+  color: white;
+  font-weight: 700;
+  padding: 0.625rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 150ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background-color: #D96718;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  font-weight: 700;
+  padding: 0.625rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 150ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.section-tag {
+  background-color: #F57C28;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-block;
+}
