@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -15,14 +16,14 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Sütun 1 — Marka */}
           <div>
-            <Link href="/" className="inline-flex items-center gap-2.5 mb-4">
-              <div style={{ width:36, height:36, background:'#F57C28', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <span style={{ fontFamily:'var(--font-heading)', fontSize:20, fontWeight:800, color:'white', lineHeight:1 }}>M</span>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span style={{ fontFamily:'var(--font-heading)', fontSize:18, fontWeight:800, color:'white', letterSpacing:'0.03em' }}>MAKRO</span>
-                <span style={{ fontSize:9, fontWeight:700, color:'#FFA05A', letterSpacing:'0.14em', textTransform:'uppercase', marginTop: 2 }}>İş Elbiseleri</span>
-              </div>
+            <Link href="/" className="inline-flex items-center mb-4">
+              <Image
+                src="/brand/makrologo.jpeg"
+                alt="Makro Logo"
+                width={160}
+                height={36}
+                style={{ objectFit: 'contain', width: 'auto', height: '36px' }}
+              />
             </Link>
             <p className="text-white/60 text-sm mb-4">
               Kurumsal iş kıyafetinde güvenilir çözüm ortağınız.

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/prisma'
-import ProductGrid from '@/components/products/ProductGrid'
+import CategoryProductsClient from '@/components/products/CategoryProductsClient'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -88,7 +88,7 @@ export default async function KategoriPage({ params }: Props) {
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {category.products.length > 0 ? (
-          <ProductGrid products={category.products} columns={3} />
+          <CategoryProductsClient products={category.products} />
         ) : (
           <div className="text-center py-20">
             <p className="text-gray-400 text-lg mb-4">Bu kategoride henüz ürün bulunmuyor.</p>

@@ -48,45 +48,59 @@ export default async function KategorilerPage() {
         </div>
       </div>
 
-      {/* Category Grid */}
+      {/* Category Grid — anasayfa stiliyle aynı dark overlay kartlar */}
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              href={`/kategoriler/${cat.slug}`}
-              className="group bg-white border-2 border-gray-200 rounded-2xl overflow-hidden transition-all duration-200 hover:border-orange-400 hover:-translate-y-1"
-              style={{ boxShadow: '0 2px 12px rgba(15,34,64,.08)' }}
-            >
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  src={`/kategoriler/${cat.slug}.jpg`}
-                  alt={cat.name}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-5">
-                <h2
-                  className="font-extrabold text-xl mb-1"
-                  style={{ fontFamily: 'var(--font-heading)', color: '#0F2240' }}
-                >
-                  {cat.name}
-                </h2>
-                {cat.description && (
-                  <p className="text-sm text-gray-500 mb-2 line-clamp-2">{cat.description}</p>
-                )}
-                <p className="text-xs text-gray-400 mb-1">{categoryFabrics[cat.slug] ?? ''}</p>
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                  <span className="text-sm text-gray-400">{cat._count.products} ürün</span>
-                  <span className="text-sm font-bold" style={{ color: '#F57C28' }}>
-                    İncele →
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {(() => {
+          const catMeta: Record<string, { img: string; sub: string }> = {
+            'tisort-polo':   { img: '/products/bisiklet-yaka-tisort-siyah.png',        sub: 'Compak penye, pike & pique kumaş' },
+            'sweat-kislik':  { img: '/products/kapsonlu-sweatshirt-siyah.png',         sub: 'Sweatshirt, kapşonlu & hırka'      },
+            'polar-esofman': { img: '/products/polar-ceket-siyah.png',                 sub: 'Polar ceket & eşofman takımı'      },
+            'is-pantolonu':  { img: '/products/reflektorlu-is-pantolonu-lacivert.png', sub: 'Kargo, reflektörlü & dayanıklı'   },
+          }
+          return (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+              {categories.map((cat) => {
+                const meta = catMeta[cat.slug] ?? { img: `/kategoriler/${cat.slug}.jpg`, sub: categoryFabrics[cat.slug] ?? 'Kurumsal koleksiyon' }
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/kategoriler/${cat.slug}`}
+                    className="group hover:-translate-y-2 transition-transform duration-300"
+                    style={{
+                      display: 'block', position: 'relative',
+                      borderRadius: 16, overflow: 'hidden',
+                      height: 320, textDecoration: 'none',
+                      boxShadow: '0 4px 20px rgba(15,34,64,0.12)',
+                      background: '#0F2240',
+                    }}
+                  >
+                    <Image
+                      src={meta.img}
+                      alt={cat.name}
+                      fill
+                      style={{ objectFit: 'cover', objectPosition: 'top center', transition: 'transform .5s ease' }}
+                      className="group-hover:scale-110"
+                    />
+                    {/* Gradient overlay */}
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,20,40,0.92) 0%, rgba(10,20,40,0.4) 55%, rgba(10,20,40,0.05) 100%)' }} />
+                    {/* Ürün sayısı */}
+                    <div style={{ position: 'absolute', top: 14, right: 14, background: 'rgba(245,124,40,0.9)', backdropFilter: 'blur(4px)', color: 'white', fontSize: 11, fontWeight: 800, padding: '4px 10px', borderRadius: 20, letterSpacing: '.04em' }}>
+                      {cat._count.products} ürün
+                    </div>
+                    {/* İçerik */}
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 20px 22px' }}>
+                      <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 26, fontWeight: 900, color: 'white', margin: '0 0 5px 0', lineHeight: 1, letterSpacing: '-0.01em' }}>{cat.name}</h2>
+                      <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', margin: '0 0 14px 0', fontWeight: 500 }}>{meta.sub}</p>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#F57C28', color: 'white', fontSize: 12, fontWeight: 800, padding: '6px 14px', borderRadius: 20, letterSpacing: '.04em', textTransform: 'uppercase' }}>
+                        Koleksiyonu Keşfet →
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          )
+        })()}
       </div>
     </>
   )

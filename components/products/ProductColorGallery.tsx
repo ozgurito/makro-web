@@ -23,13 +23,24 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
   const containerRef = useRef<HTMLDivElement>(null)
   const zoomDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  // Renk bazlı filtrelenmiş görseller
+  const activeColor = colors.find(c => c.id === activeColorId)
+  const colorFilteredImages = (() => {
+    if (!activeColor) return images
+    const filtered = images.filter(img =>
+      img.altText?.toLowerCase().includes(activeColor.colorName.toLowerCase()) ||
+      img.imageUrl.toLowerCase().includes(colorToKey(activeColor.colorName))
+    )
+    return filtered.length > 0 ? filtered : images
+  })()
+
   // Klavye (lightbox)
   const handleKey = useCallback((e: KeyboardEvent) => {
     if (!lightboxOpen) return
     if (e.key === 'Escape') setLightboxOpen(false)
-    if (e.key === 'ArrowRight') setLightboxIndex(i => Math.min(i + 1, images.length - 1))
+    if (e.key === 'ArrowRight') setLightboxIndex(i => Math.min(i + 1, colorFilteredImages.length - 1))
     if (e.key === 'ArrowLeft') setLightboxIndex(i => Math.max(i - 1, 0))
-  }, [lightboxOpen, images.length])
+  }, [lightboxOpen, colorFilteredImages.length])
 
   useEffect(() => {
     window.addEventListener('keydown', handleKey)
@@ -66,7 +77,7 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
     if (zoomDelayRef.current) clearTimeout(zoomDelayRef.current)
     setShowZoom(false)
     if (!activeImage) return
-    const idx = images.findIndex(img => img.id === activeImage.id)
+    const idx = colorFilteredImages.findIndex(img => img.id === activeImage.id)
     setLightboxIndex(idx >= 0 ? idx : 0)
     setLightboxOpen(true)
   }
@@ -91,8 +102,7 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
     if (img) setActiveImage(img)
   }
 
-  const activeColor = colors.find(c => c.id === activeColorId)
-  const lightboxImage = images[lightboxIndex]
+  const lightboxImage = colorFilteredImages[lightboxIndex]
 
   return (
     <>
@@ -179,10 +189,10 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
           )}
         </div>
 
-        {/* Thumbnails */}
-        {images.length > 1 && (
+        {/* Thumbnails — sadece aktif renge ait görseller */}
+        {colorFilteredImages.length > 1 && (
           <div className="flex gap-2 overflow-x-auto pb-1">
-            {images.map((img) => {
+            {colorFilteredImages.map((img) => {
               const isActive = img.id === activeImage?.id
               return (
                 <button
@@ -190,11 +200,6 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
                   onClick={(e) => {
                     e.stopPropagation()
                     setActiveImage(img)
-                    const matchColor = colors.find(c =>
-                      img.altText?.toLowerCase().includes(c.colorName.toLowerCase()) ||
-                      img.imageUrl.toLowerCase().includes(colorToKey(c.colorName))
-                    )
-                    if (matchColor) setActiveColorId(matchColor.id)
                   }}
                   className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all hover:scale-105"
                   style={{ borderColor: isActive ? '#F57C28' : '#e5e7eb' }}
@@ -250,7 +255,7 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
             }}
           >×</button>
 
-          {images.length > 1 && lightboxIndex > 0 && (
+          {colorFilteredImages.length > 1 && lightboxIndex > 0 && (
             <button
               onClick={(e) => { e.stopPropagation(); setLightboxIndex(i => i - 1) }}
               style={{
@@ -263,7 +268,7 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
             >‹</button>
           )}
 
-          {images.length > 1 && lightboxIndex < images.length - 1 && (
+          {colorFilteredImages.length > 1 && lightboxIndex < colorFilteredImages.length - 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); setLightboxIndex(i => i + 1) }}
               style={{
@@ -287,13 +292,13 @@ export default function ProductColorGallery({ colors, images, productName }: Pro
             />
           </div>
 
-          {images.length > 1 && (
+          {colorFilteredImages.length > 1 && (
             <div style={{
               position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)',
               background: 'rgba(255,255,255,0.15)', color: 'white',
               padding: '4px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600,
             }}>
-              {lightboxIndex + 1} / {images.length}
+              {lightboxIndex + 1} / {colorFilteredImages.length}
             </div>
           )}
         </div>

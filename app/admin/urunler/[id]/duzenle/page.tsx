@@ -7,7 +7,7 @@ export default async function UrunDuzenle({ params }: { params: Promise<{ id: st
   const [product, categories] = await Promise.all([
     prisma.product.findUnique({
       where: { id },
-      include: { colors: true, sizes: true, features: true },
+      include: { colors: true, sizes: true, features: true, images: true },
     }),
     prisma.category.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } }),
   ])

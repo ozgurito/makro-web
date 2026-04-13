@@ -14,7 +14,7 @@ function slugify(text: string): string {
 async function checkAuth() {
   const cookieStore = await cookies()
   const auth = cookieStore.get('admin-auth')?.value
-  return auth === process.env.ADMIN_SECRET
+  return auth === 'authenticated'
 }
 
 export async function POST(req: NextRequest) {
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
         longDescription: longDescription || null,
         coverImageUrl: coverImageUrl || null,
         fabricInfo: fabricInfo || null,
-        fabricWeight: fabricWeight ? Number(fabricWeight) : null,
+        fabricWeight: fabricWeight || null,
         washingInstructions: washingInstructions || null,
         hasPrintOption: Boolean(hasPrintOption),
         hasEmbroideryOption: Boolean(hasEmbroideryOption),

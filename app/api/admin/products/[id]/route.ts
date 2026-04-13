@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma'
 async function checkAuth() {
   const cookieStore = await cookies()
   const auth = cookieStore.get('admin-auth')?.value
-  return auth === process.env.ADMIN_SECRET
+  return auth === 'authenticated'
 }
 
 // PATCH — quick toggle (isActive / isFeatured / isNew)
@@ -61,7 +61,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         longDescription: longDescription || null,
         coverImageUrl: coverImageUrl || null,
         fabricInfo: fabricInfo || null,
-        fabricWeight: fabricWeight ? Number(fabricWeight) : null,
+        fabricWeight: fabricWeight || null,
         washingInstructions: washingInstructions || null,
         hasPrintOption: Boolean(hasPrintOption),
         hasEmbroideryOption: Boolean(hasEmbroideryOption),

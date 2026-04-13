@@ -7,11 +7,12 @@ import Link from 'next/link'
 type Category = { id: string; name: string; slug: string; _count: { products: number } }
 
 const COLOR_OPTIONS = [
-  { name: 'Siyah', hex: '#1A1A1A' },
-  { name: 'Gri', hex: '#808080' },
+  { name: 'Siyah',    hex: '#1A1A1A' },
+  { name: 'Gri',      hex: '#808080' },
   { name: 'Lacivert', hex: '#1B2A6B' },
-  { name: 'Kırmızı', hex: '#C0392B' },
-  { name: 'Beyaz', hex: '#F5F5F5' },
+  { name: 'Kırmızı',  hex: '#C0392B' },
+  { name: 'Beyaz',    hex: '#F5F5F5' },
+  { name: 'Mavi',     hex: '#1B4F9E' },
 ]
 
 const FABRIC_OPTIONS = [

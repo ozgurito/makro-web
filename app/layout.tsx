@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Barlow_Condensed, Nunito_Sans } from 'next/font/google'
+import { unstable_cache } from 'next/cache'
 import './globals.css'
 import { prisma } from '@/lib/prisma'
 import Header from '@/components/layout/Header'
@@ -32,18 +33,46 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? 'https://makroiselbisesi.com.tr'
   ),
+  openGraph: {
+    type: 'website',
+    locale: 'tr_TR',
+    siteName: 'Makro İş Elbiseleri',
+    title: 'Makro İş Elbiseleri — Kurumsal İş Kıyafetleri',
+    description:
+      'Kurumsal iş kıyafetlerinde güvenilir çözüm ortağınız. DTF baskı ve nakış. Toptan satış, Türkiye geneli teslimat.',
+    images: [
+      {
+        url: '/logo.webp',
+        width: 800,
+        height: 600,
+        alt: 'Makro İş Elbiseleri Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Makro İş Elbiseleri',
+    description: 'Kurumsal iş kıyafetlerinde güvenilir çözüm ortağınız.',
+    images: ['/logo.webp'],
+  },
 }
+
+const getNavCategories = unstable_cache(
+  () => prisma.category.findMany({
+    where: { isActive: true },
+    include: { _count: { select: { products: true } }, products: { select: { name: true, slug: true }, take: 10 } },
+    orderBy: { sortOrder: 'asc' },
+  }),
+  ['nav-categories'],
+  { revalidate: 60 }
+)
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const categories = await prisma.category.findMany({
-    where: { isActive: true },
-    include: { _count: { select: { products: true } }, products: { select: { name: true, slug: true }, take: 10 } },
-    orderBy: { sortOrder: 'asc' },
-  })
+  const categories = await getNavCategories().catch(() => [])
 
   return (
     <html

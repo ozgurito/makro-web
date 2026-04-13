@@ -27,7 +27,28 @@
       "Bash(npx dotenv -e .env.local -- node -e \":*)",
       "Bash(set -a)",
       "Bash(source .env.local)",
-      "Bash(curl -s \"http://localhost:3000/api/search?q=t&limit=5\")"
+      "Bash(curl -s \"http://localhost:3000/api/search?q=t&limit=5\")",
+      "Bash(node -e \"const p=require\\(''''./package.json''''\\); console.log\\(p.dependencies?.tailwindcss || p.devDependencies?.tailwindcss\\)\")",
+      "Bash(npx next:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s -m 10 http://localhost:3000/)",
+      "Bash(curl -s -m 15 \"http://localhost:3000/\")",
+      "Bash(curl -v -m 10 \"http://localhost:3000/\")",
+      "Bash(curl -m 60 \"http://localhost:3000/\")",
+      "Bash(curl -s -m 45 \"http://localhost:3000/\")",
+      "Bash(curl -s -m 10 \"http://localhost:3000/api/categories\")",
+      "Bash(curl -s -m 10 \"http://localhost:3000/_next/static/chunks/main.js\")",
+      "Bash(netstat -ano)",
+      "Bash(tasklist /FI \"PID eq 4900\")",
+      "Bash(wmic process:*)",
+      "Bash(node -e \"const d=require\\(''''fs''''\\).readFileSync\\(''''/dev/stdin'''',''''utf8''''\\); const p=JSON.parse\\(d\\); console.log\\(''''Next version:'''', p.version\\);\")",
+      "Bash(node -e \"const p=require\\(''E:/workspace/makro-web/node_modules/next/package.json''\\); console.log\\(''Next:'', p.version\\);\")",
+      "Bash(head -10 grep -r \"MIDDLEWARE_FILE\\\\|middleware\\\\|proxy\" E:/workspace/makro-web/node_modules/next/dist/shared/lib/constants.js)",
+      "Bash(grep -rn PROXY_FILENAME E:/workspace/makro-web/node_modules/next/dist/lib --include=*.js)",
+      "Bash(head -10 grep -rn \"proxyModule\\\\|loadProxy\\\\|PROXY\" E:/workspace/makro-web/node_modules/next/dist/server --include=*.js -l)",
+      "Bash(curl -s -m 30 \"http://localhost:3000/\")",
+      "Bash(curl -s -m 60 \"http://localhost:3000/\")"
     ]
   }
 }

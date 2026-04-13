@@ -29,7 +29,7 @@ function SectionHeader({ tag, title, subtitle }: { tag: string; title: string; s
   )
 }
 
-export default async function HomePage() {
+async function getHomeData() {
   const [featuredProducts, allActiveProducts, categories, newProducts, popularProducts] = await Promise.all([
     prisma.product.findMany({
       where: { isFeatured: true, isActive: true },
@@ -60,6 +60,48 @@ export default async function HomePage() {
       take: 4,
     }),
   ])
+  return { featuredProducts, allActiveProducts, categories, newProducts, popularProducts }
+}
+
+export default async function HomePage() {
+  const data = await getHomeData().catch((err) => {
+    console.error('[HomePage] DB error:', err)
+    return null
+  })
+
+  if (!data) {
+    return (
+      <>
+        <HeroSlider />
+        <section style={{ background: '#F7F8FA', padding: '80px 24px', textAlign: 'center' }}>
+          <div style={{ maxWidth: 520, margin: '0 auto' }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>🔧</div>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 32, fontWeight: 800, color: '#0F2240', marginBottom: 12 }}>
+              Kısa Bir Bakım Molası
+            </h2>
+            <p style={{ color: '#6B7A8D', fontSize: 16, lineHeight: 1.7, marginBottom: 24 }}>
+              Sistemimiz kısa süreli bir teknik güncelleme geçiriyor. Birkaç dakika sonra tekrar deneyin.
+            </p>
+            <a
+              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP ?? '905418771635'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                background: '#25D366', color: 'white',
+                padding: '13px 28px', borderRadius: 8,
+                fontWeight: 700, fontSize: 14, textDecoration: 'none',
+              }}
+            >
+              WhatsApp ile İletişim
+            </a>
+          </div>
+        </section>
+      </>
+    )
+  }
+
+  const { featuredProducts, allActiveProducts, categories, newProducts, popularProducts } = data
 
   // Featured az ise tüm aktif ürünleri göster
   const displayFeatured = featuredProducts.length >= 2 ? featuredProducts : allActiveProducts
@@ -156,7 +198,29 @@ export default async function HomePage() {
       ════════════════════════════════════════════ */}
       <section style={{ background: '#FFFFFF', padding: '64px 24px' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <SectionHeader tag="Ürün Kategorileri" title="Kurumsal Giyim Koleksiyonu" />
+          {/* Section header + "Tüm Kategoriler" CTA */}
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#F57C28', letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10 }}>Ürün Kategorileri</div>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 800, color: '#0F2240', margin: 0 }}>Kurumsal Giyim Koleksiyonu</h2>
+            </div>
+            <Link
+              href="/kategoriler"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                fontSize: 14, fontWeight: 700, color: '#0F2240',
+                border: '1.5px solid #E8ECF0', borderRadius: 10,
+                padding: '10px 20px', textDecoration: 'none',
+                background: 'white', transition: 'all .2s',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Tüm Kategoriler
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
+          </div>
 
           {/* Kategori görsel + açıklama eşleşmesi */}
           {(() => {

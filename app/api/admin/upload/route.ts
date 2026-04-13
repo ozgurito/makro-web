@@ -9,7 +9,7 @@ const BUCKET = 'product-images'
 export async function POST(req: NextRequest) {
   const cookieStore = await cookies()
   const auth = cookieStore.get('admin-auth')?.value
-  if (auth !== process.env.ADMIN_SECRET) {
+  if (auth !== 'authenticated') {
     return NextResponse.json({ error: 'Yetkisiz' }, { status: 401 })
   }
 

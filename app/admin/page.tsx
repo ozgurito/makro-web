@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import FormRow from './FormRow'
 
 export default async function AdminDashboard() {
   const [totalProducts, activeProducts, totalForms] = await Promise.all([
@@ -39,27 +40,14 @@ export default async function AdminDashboard() {
               <th className="px-6 py-3 font-semibold">Tarih</th>
               <th className="px-6 py-3 font-semibold">İsim / Firma</th>
               <th className="px-6 py-3 font-semibold">İletişim</th>
+              <th className="px-6 py-3 font-semibold">Mesaj</th>
               <th className="px-6 py-3 font-semibold">Tür</th>
+              <th className="px-4 py-3" />
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
             {recentForms.map(form => (
-              <tr key={form.id}>
-                <td className="px-6 py-4">{form.createdAt.toLocaleDateString('tr-TR')}</td>
-                <td className="px-6 py-4 font-semibold text-gray-800">
-                  {form.fullName}
-                  {form.companyName && <span className="block text-xs font-normal text-gray-400">{form.companyName}</span>}
-                </td>
-                <td className="px-6 py-4 text-xs text-gray-600">
-                  <div>{form.phone}</div>
-                  <div>{form.email}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs font-semibold uppercase">
-                    {form.type}
-                  </span>
-                </td>
-              </tr>
+              <FormRow key={form.id} form={form} />
             ))}
             {recentForms.length === 0 && (
               <tr>

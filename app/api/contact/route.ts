@@ -5,6 +5,22 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+// In-memory rate limiter: IP → { count, resetAt }
+const contactRateLimit = new Map<string, { count: number; resetAt: number }>()
+const CONTACT_WINDOW_MS = 60_000 // 1 dakika
+const CONTACT_MAX = 3 // dakikada maksimum 3 gönderim
+
+function isContactRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const entry = contactRateLimit.get(ip)
+  if (!entry || now > entry.resetAt) {
+    contactRateLimit.set(ip, { count: 1, resetAt: now + CONTACT_WINDOW_MS })
+    return false
+  }
+  entry.count++
+  return entry.count > CONTACT_MAX
+}
+
 const contactSchema = z.object({
   fullName: z.string().min(2),
   email: z.string().email(),
@@ -21,6 +37,19 @@ const contactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // IP tabanlı rate limit
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+      request.headers.get('x-real-ip') ??
+      'unknown'
+
+    if (isContactRateLimited(ip)) {
+      return NextResponse.json(
+        { error: 'Çok fazla istek. Lütfen 1 dakika bekleyin.' },
+        { status: 429 }
+      )
+    }
+
     const body = await request.json()
 
     // Honeypot check
@@ -59,6 +88,11 @@ export async function POST(request: NextRequest) {
       ? `Yeni Teklif Talebi - ${data.companyName ?? data.fullName}`
       : `Yeni İletişim Formu - ${data.companyName ?? data.fullName}`
 
+    const fromAddress =
+      process.env.RESEND_FROM ?? 'Makro İş Elbiseleri <noreply@makroiselbisesi.com.tr>'
+    const adminPhone = process.env.NEXT_PUBLIC_PHONE ?? '05418771635'
+    const adminPhoneFormatted = adminPhone.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4')
+
     const adminHtml = `
       <div style="font-family:sans-serif;max-width:600px;margin:auto">
         <div style="background:#0F2240;padding:24px;border-radius:8px 8px 0 0">
@@ -90,7 +124,7 @@ export async function POST(request: NextRequest) {
         </div>
         <div style="border:1px solid #e5e7eb;border-top:none;padding:24px;border-radius:0 0 8px 8px">
           <p>Merhaba <strong>${data.fullName}</strong>,</p>
-          <p>Talebiniz alındı. En kısa sürede <a href="tel:05418771635" style="color:#F57C28">0541 877 16 35</a> numaralı hattan sizi arayacağız.</p>
+          <p>Talebiniz alındı. En kısa sürede <a href="tel:${adminPhone}" style="color:#F57C28">${adminPhoneFormatted}</a> numaralı hattan sizi arayacağız.</p>
           <p style="color:#6b7280">Makro İş Elbiseleri Ekibi</p>
         </div>
       </div>
@@ -98,14 +132,14 @@ export async function POST(request: NextRequest) {
 
     await Promise.allSettled([
       resend.emails.send({
-        from: 'Makro İş Elbiseleri <noreply@makroiselbisesi.com.tr>',
+        from: fromAddress,
         to: process.env.ADMIN_EMAIL!,
         subject,
         html: adminHtml,
         replyTo: data.email,
       }),
       resend.emails.send({
-        from: 'Makro İş Elbiseleri <noreply@makroiselbisesi.com.tr>',
+        from: fromAddress,
         to: data.email,
         subject: 'Talebiniz Alındı - Makro İş Elbiseleri',
         html: userHtml,
@@ -124,3 +158,5 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Sunucu hatası' }, { status: 500 })
   }
 }
+
+
